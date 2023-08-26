@@ -5,8 +5,8 @@ import VideoCameraFrontIcon from '@mui/icons-material/VideoCameraFront'
 import PhotoLibraryIcon from '@mui/icons-material/PhotoLibrary';
 import SentimentVerySatisfiedIcon from '@mui/icons-material/SentimentVerySatisfied';
 import { Button,TextField } from '@mui/material';
-import { db } from '@/settings/firebase.setting';
 import { collection,addDoc } from 'firebase/firestore';
+import { db } from '@/settings/firebase.setting';
 
 export default function WritePost() {
     const {data:session} = useSession();

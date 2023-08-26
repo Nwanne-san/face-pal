@@ -1,10 +1,9 @@
 import { useFormik} from 'formik';
 import * as yup from 'yup';
 import { signIn, useSession } from 'next-auth/react';
-import { authentication } from '@/settings/firebase.setting';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { useRouter } from 'next/router';
-
+import { authentication } from '@/settings/firebase.setting';
 
 //validation rules
 const validationRules = yup.object().shape({

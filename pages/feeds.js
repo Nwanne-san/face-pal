@@ -6,8 +6,8 @@ import { useSession  } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import WritePost from '@/components/WritePost';
 import { getDocs, collection } from 'firebase/firestore';
-import { db } from '@/settings/firebase.setting';
 import PostDisplay from '@/components/PostDisplay';
+import { db } from '@/settings/firebase.setting';
 
 export default function Feeds() {
     const {data:session} = useSession();
