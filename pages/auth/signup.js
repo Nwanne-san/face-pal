@@ -1,7 +1,7 @@
 import { useFormik} from 'formik';
 import * as yup from 'yup';
 import { signIn, useSession } from 'next-auth/react';
-//import { authentication } from '@/settings/firebase.setting';
+import { authentication } from '@/settings/firebase.setting';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { useRouter } from 'next/router';
 
@@ -11,8 +11,8 @@ const validationRules = yup.object().shape({
     email:yup.string()
     .required('field is compulsory'),
     password:yup.string()
-    .required().
-    min(8, 'must be up to 8 characters')
+    .required()
+    .min(8, 'must be up to 8 characters')
     .max(20, 'max of 20 characters'),
     //.oneOf([yup.ref('passwordConfirmation'),null],'Your password must match')
     passwordConfirmation:yup.string()
@@ -30,7 +30,7 @@ export default function Signup() {
     }
 
     const handleGoogleEmailPasswordCreateAccount = async (userEmail,userPassword) => {
-        createUserWithEmailAndPassword(userEmail,userPassword)
+        createUserWithEmailAndPassword(authentication,userEmail,userPassword)
         .then((user) => {
             alert(`${user} created successfully`)
         })
