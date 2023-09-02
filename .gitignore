@@ -35,5 +35,5 @@ yarn-lock*
 next-env.d.ts
 
 # my own ignores
-*.setting.js
-*.lock
+# *.setting.js
+# *.lock
