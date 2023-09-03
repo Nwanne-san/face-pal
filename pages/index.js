@@ -20,7 +20,7 @@ export default function Home() {
   return ( 
     
     <>
-      <div className="h-screen w-full flex flex-col justify-around bg">
+      <div className="h-screen w-full flex flex-col justify-around mobile-bg sm:tablet-bg lg:desktop-bg">
         <Image src="/image/bg-mobile.jpg" width={60} height={60} className="h-screen w-full sm:hidden" alt="cover image"/>
         <div className="w-full flex flex-col sm:flex-row justify-center items-center gap-4 px-8 sm:px-10 lg:px-24">
             <div className="w-full sm:min-h-[480px] bg-indigo-300/20 py-6 sm:py-10 px-[40px] rounded-lg">
@@ -48,7 +48,7 @@ export default function Home() {
                     <button className="w-full h-12 bg-sky-600 rounded-lg text-white font-bold">Twitter</button>
                 </div>
         
-                <p className="text-2xl text-gray-600">New to facepal? <Link href="#" className="underline">create account</Link></p>
+                <p className="text-2xl text-gray-600">New to facepal? <Link href="/auth/signup" className="underline hover:text-indigo-600">create account</Link></p>
             </div>
         </div>
       </div>

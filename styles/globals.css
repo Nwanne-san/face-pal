@@ -1,12 +1,38 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+/* 
 @layer utilities {
   .bg{
-    /* background-image: url('/image/bg.jpg'); */
     background-image: url('/public/image/bg.jpg');
     background-size: cover;
     background-position: center;
 }
+} */
+
+
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.desktop-bg {
+  background-image: linear-gradient(rgba(97, 103, 122, 0.5), rgba(39, 40, 41, 0.9)),url("/image/bg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.tablet-bg {
+  background-image: linear-gradient(rgba(97, 103, 122, 0.5), rgba(39, 40, 41, 0.9)),url("/image/bg-tablet.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.mobile-bg {
+  background-image: linear-gradient(rgba(97, 103, 122, 0.5), rgba(39, 40, 41, 0.9)),url("/image/bg-mobile.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
