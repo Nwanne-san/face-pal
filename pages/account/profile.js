@@ -10,11 +10,12 @@ import { collection, query, where, getDocs, orderBy } from 'firebase/firestore';
 export default function Feeds() {
     const {data:session} = useSession();
     const router = useRouter();
+    const [userPosts,setUserPosts] = React.useState([]);
 
     const handleGetUserPosts = async () => {
         const q = query(
             collection(db,'posts'),
-            where('author','==',session?.user.email),
+            where('author','==',`${session?.user.email}`),
             orderBy('postedAt','desc')
         );
         const onSnapShot = await getDocs(q);
@@ -58,7 +59,7 @@ export default function Feeds() {
                             doloremque iusto adipisicing elit. Reprehenderit est vitae alias officiis!</p>
                         <GoSignOut 
                         className='text-gray-800 my-3'
-                        onClick={() => signOut}
+                        onClick={signOut}
                         />
                         <ul className="flex flex-row justify-between mt-1">
                             <li className="text-sm text-gray-700">🇹🇴 Abuja</li>
