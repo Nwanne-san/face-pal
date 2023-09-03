@@ -30,11 +30,11 @@ export default function Feeds() {
     }
     handleGetUserPosts();
 
-    // React.useEffect(() => {
-    //     if(!session){ //that is, if theres no active session, then redirect it
-    //         router.push('/auth/signup')
-    //     }
-    // })
+    React.useEffect(() => {
+        if(!session){ //that is, if theres no active session, then redirect it
+            router.push('/auth/signup')
+        }
+    })
   return (
     <>
       <main className="h-screen flex justify-center bg-gradient-to-b from-indigo-500 via-sky-500 to-pink-500">
