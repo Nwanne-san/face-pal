@@ -6,8 +6,10 @@ import ReplyOutlinedIcon from '@mui/icons-material/ReplyOutlined';
 import PublicIcon from '@mui/icons-material/Public';
 import ClearIcon from '@mui/icons-material/Clear';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import { hoursAgo } from '@/assets/hours-ago';
+import { db } from '@/settings/firebase.setting';
 
-export default function PostDisplay({timePosted,body,postImage}) {
+export default function PostDisplay({postID,timePosted,body,postImage}) {
     const {data:session} = useSession();
 
     return (
@@ -22,7 +24,7 @@ export default function PostDisplay({timePosted,body,postImage}) {
                     <div className='flex flex-col'>
                         <small className="text-gray-800">{session?.user.name}</small>
                         <small className='text-gray-500'>
-                            {timePosted} 
+                            <span>{hoursAgo(timePosted)} hours ago</span>
                             <PublicIcon sx={{fontSize:15}} />
                         </small>
                     </div>

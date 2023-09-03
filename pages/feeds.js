@@ -15,11 +15,11 @@ export default function Feeds() {
     const router = useRouter();
 
     React.useEffect(() => {
-    //     if(!session){ //that is, if theres no active session, then redirect it
-    //         router.push('/auth/signup')
-    //     }
-    // },[]
-})
+        if(!session){ //that is, if theres no active session, then redirect it
+            router.push('/auth/signup')
+        }
+    },[]
+    )
       //get posts from firestore
     const getPosts = async () => {
         const res = await getDocs(collection(db,'posts'));
