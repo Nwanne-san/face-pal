@@ -8,12 +8,12 @@ import { getApp,getApps } from "firebase/app";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyBG6ckslhICY9YtEXnayC48ltgQKzCMj6Y",
-  authDomain: "face-p.firebaseapp.com",
-  projectId: "face-p",
-  storageBucket: "face-p.appspot.com",
-  messagingSenderId: "974215858801",
-  appId: "1:974215858801:web:c388695db021c1b3a4e9d0"
+  apiKey: "AIzaSyD9mEY79VayFPo60t2U01KkvxX9GFFdrRU",
+  authDomain: "face-pal.firebaseapp.com",
+  projectId: "face-pal",
+  storageBucket: "face-pal.appspot.com",
+  messagingSenderId: "98611431542",
+  appId: "1:98611431542:web:f9964dd694b9c875f23757"
 };
 
 // Initialize Firebase
