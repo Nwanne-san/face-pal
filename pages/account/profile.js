@@ -29,11 +29,11 @@ export default function Feeds() {
     }
     handleGetUserPosts();
 
-    React.useEffect(() => {
-        if(!session){ //that is, if theres no active session, then redirect it
-            router.push('/auth/signup')
-        }
-    })
+    // React.useEffect(() => {
+    //     if(!session){ //that is, if theres no active session, then redirect it
+    //         router.push('/auth/signup')
+    //     }
+    // })
   return (
     <>
       <main className="h-screen flex justify-center bg-gradient-to-b from-indigo-500 via-sky-500 to-pink-500">
@@ -58,7 +58,7 @@ export default function Feeds() {
                             doloremque iusto adipisicing elit. Reprehenderit est vitae alias officiis!</p>
                         <GoSignOut 
                         className='text-gray-800 my-3'
-                        onClick={() => signOut()}
+                        onClick={() => signOut}
                         />
                         <ul className="flex flex-row justify-between mt-1">
                             <li className="text-sm text-gray-700">🇹🇴 Abuja</li>
