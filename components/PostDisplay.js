@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
+import { Button } from '@mui/material';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ChatBubbleOutlineRoundedIcon from '@mui/icons-material/ChatBubbleOutlineRounded';
 import ReplyOutlinedIcon from '@mui/icons-material/ReplyOutlined';
