@@ -23,8 +23,8 @@ export default function WritePost() {
             imageUrl:cdnImages[rangeOfRandNums(0,cdnImages.length)] //selecting a random number in the array of images
         })
         .then(() => {
-            alert('Your post was published');
             setFormInput('');
+            alert('Your post was published');
         })
         .catch(error => console.error(error))
     }
