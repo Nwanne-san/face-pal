@@ -77,6 +77,7 @@ export default function Feeds() {
                           posts.map(post => (
                             <div id={post.id}>
                               <PostDisplay 
+                              postId={post.id}
                               timePosted={post.data.postedAt}
                               body={post.data.body}
                               postImage={post.data.imageUrl}

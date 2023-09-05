@@ -1,67 +1,66 @@
 import * as React from 'react';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
-import { Button, TextField } from '@mui/material';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ChatBubbleOutlineRoundedIcon from '@mui/icons-material/ChatBubbleOutlineRounded';
-import ReplyOutlinedIcon from '@mui/icons-material/ReplyOutlined';
 import PublicIcon from '@mui/icons-material/Public';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import Menu from '@mui/material/Menu'
-import MenuItem from '@mui/material/MenuItem'
 import { hoursAgo } from '@/assets/hours-ago';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import { Button,TextField, } from '@mui/material';
 import ActivityIndicator from '@/utils/activity-indicator';
-import { db } from '@/settings/firebase.setting';
-import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import CustomDialog from './CustomDialog';
+import { db } from '@/settings/firebase.setting';
+import { doc,deleteDoc,updateDoc } from 'firebase/firestore';
 
-export default function PostDisplay({postID,timePosted,body,postImage}) {
+export default function PostDisplay({postId,timePosted,body,postImage}) {
     const {data:session} = useSession();
-    const [updatePost, setUpdatePost] = React.useState(body); // for updating posts
-    const [showActivityIndicator, setShowActivityIndicator] = React.useState(false)
+    const [updatePost,setUpdatePost] = React.useState(body);//for updating posts
+    const [showActivityIndicator,setShowActivityIndicator] = React.useState(false);
 
-     //MENU CONTROL >>>> START
-     const [anchorEl, setAnchorEl] = React.useState(null);
-     const open = Boolean(anchorEl);
-     const handleClick = (event) => setAnchorEl(event.currentTarget);
-     const handleClose = () => setAnchorEl(null);
-     //MENU CONTROL >>>> END
- 
-     //DIALOG CONTROL >>>> START
-     const [openDialog, setOpenDialog] = React.useState(false);
-     const handleClickOpenDialog = () => setOpenDialog(true);
-     const handleCloseDialog = () => setOpenDialog(false);
-     //DIALOG CONTROL >>>> END
- 
-     //UPDATE DIALOG CONTROL >>>> START
-     const [openUpdateDialog, setOpenUpdateDialog] = React.useState(false);
-     const handleClickOpenUpdateDialog = () => setOpenUpdateDialog(true);
-     const handleCloseUpdateDialog = () => setOpenUpdateDialog(false);
-     //UPDATE DIALOG CONTROL >>>> END
+    //MENU CONTROL >>>> START
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event) => setAnchorEl(event.currentTarget);
+    const handleClose = () => setAnchorEl(null);
+    //MENU CONTROL >>>> END
 
-     //FUNCTION FOR DELETE POST
-     const handleDeletePost = async () => {
+    //DELETE DIALOG CONTROL >>>> START
+    const [openDialog, setOpenDialog] = React.useState(false);
+    const handleClickOpenDialog = () => setOpenDialog(true);
+    const handleCloseDialog = () => setOpenDialog(false);
+    //DELETE DIALOG CONTROL >>>> END
+    
+    //UPDATE DIALOG CONTROL >>>> START
+    const [openUpdateDialog, setOpenUpdateDialog] = React.useState(false);
+    const handleClickOpenUpdateDialog = () => setOpenUpdateDialog(true);
+    const handleCloseUpdateDialog = () => setOpenUpdateDialog(false);
+    //UPDATE DIALOG CONTROL >>>> END
+
+    //FUNCTION FOR DELETE POST
+    const handleDeletePost = async () => {
         //show activity indicator
-        setShowActivityIndicator(true)
-        setOpenDialog(true);
+        setShowActivityIndicator(true);
+        setOpenDialog(false);
         handleClose();
-        await deleteDoc(doc(db,'posts',postID))
+        await deleteDoc(doc(db,'posts',postId))
         .then(() => {
             setShowActivityIndicator(false);
             alert('post deleted');
         })
         .catch(e => {
-            setShowActivityIndicator(false)
-            console.error(e)
+            setShowActivityIndicator(false);
+            console.error(e);
         })
-     }
-
-     // FUNCTION TO UPDATE POST 
+    }
+    
+    // FUNCTION TO UPDATE POST 
     const handleUpdatePost = async () => {
         setShowActivityIndicator(true);
         setOpenUpdateDialog(false);
         handleClose();
-        await updateDoc(doc(db, 'posts',postID),{
+        await updateDoc(doc(db, 'posts', postId),{
             body: updatePost,
             updatedAt:new Date().getTime(),
         },
@@ -80,7 +79,7 @@ export default function PostDisplay({postID,timePosted,body,postImage}) {
 
     return (
         <>
-        {showActivityIndicator ? <ActivityIndicator/> : null}
+        {showActivityIndicator ? <ActivityIndicator /> : null}
         <div className="border border-gray-100 bg-white rounded-md shadow-md py-4 mb-4">
             <ul className="flex justify-between px-4">
                 <li className="flex flex-row gap-1 items-center">
@@ -99,10 +98,10 @@ export default function PostDisplay({postID,timePosted,body,postImage}) {
                 </li>
                 <li>
                     <div className="text-gray-700">
-                        <button className='p-2 hover:bg-gray-200 rounded-full ' onClick={handleClick}>
-                            <MoreHorizIcon />
+                        <button className='p-2 hover:bg-gray-200 rounded-full'>
+                            <MoreHorizIcon
+                            onClick={handleClick} />
                         </button>
-                        
                     </div>
                 </li>
             </ul>
@@ -110,9 +109,10 @@ export default function PostDisplay({postID,timePosted,body,postImage}) {
             <p className='px-4'>{body}</p>
             <Image  
             src={postImage}
-            width={50}
-            height={50}
-            className='w-full py-4'/>
+            width={560}
+            height={560}
+            alt='post image'
+            className='w-full h-auto py-4'/>
             <div className='flex flex-row justify-between px-4'>
                 <div className='flex items-center justify-center w-[20px] h-[20px] rounded-full bg-sky-800'>
                     <ThumbUpIcon 
@@ -134,42 +134,39 @@ export default function PostDisplay({postID,timePosted,body,postImage}) {
                     <ChatBubbleOutlineRoundedIcon />
                     Comment
                 </button>
-                <button className='w-full p-2 hover:bg-gray-200 text-gray-500 rounded'>
-                    <ReplyOutlinedIcon  />
-                    Share
-                </button>
             </div>
         </div>  
+
         <Menu
-            id="demo-positioned-menu"
-            aria-labelledby="demo-positioned-button"
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleClose}
-            anchorOrigin={{
-              vertical: 'top',
-              horizontal: 'left',
-            }}
-            transformOrigin={{
-              vertical: 'top',
-              horizontal: 'left',
-            }}
+        id="demo-positioned-menu"
+        aria-labelledby="demo-positioned-button"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'left',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'left',
+        }}
         >
-            <MenuItem onClick={handleClickOpenUpdateDialog}>Update</MenuItem>
+            <MenuItem onClick={handleClickOpenUpdateDialog} >Update</MenuItem>
             <MenuItem onClick={handleClickOpenDialog}>Delete</MenuItem>
         </Menu>
-        
+        {/* DELETE POST CUSTOM DIALOG  */}
         <CustomDialog 
-            openProp={openDialog} 
-            handleCloseProp={handleCloseDialog} 
-            title='Delete post?'>
-                <p>Confirm post deletion</p>
-                <Button 
-                variant='outlined' 
-                color='error' 
-                onClick={handleDeletePost}>
-                    Yes, delete
-                </Button>
+        openProp={openDialog} 
+        handleCloseProp={handleCloseDialog} 
+        title='Delete post?'>
+            <p>Confirm post deletion</p>
+            <Button 
+            variant='outlined' 
+            color='error' 
+            onClick={handleDeletePost}>
+                Yes, delete
+            </Button>
         </CustomDialog>
         {/* UPDATE POST CUSTOM DIALOG  */}
         <CustomDialog 
