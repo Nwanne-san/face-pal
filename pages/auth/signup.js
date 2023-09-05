@@ -1,6 +1,8 @@
 import { useFormik} from 'formik';
 import * as yup from 'yup';
 import { signIn, useSession } from 'next-auth/react';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '../api/auth/[...nextauth]';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { useRouter } from 'next/router';
 import { authentication } from '@/settings/firebase.setting';
@@ -101,4 +103,23 @@ export default function Signup() {
         </main>
     </>
   )
+}
+
+export async function getServerSideProps(context) {
+    const session = await getServerSession(context.req,context.res,authOptions);
+
+    if(session) {
+      return {
+        redirect:{
+          destination:'/feeds',
+          permanent:false,
+        }
+      }
+    }
+
+    return {
+      props:{
+        session:session
+      }
+    }
 }

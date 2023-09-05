@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
-import { Button } from '@mui/material';
+import { Button, TextField } from '@mui/material';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ChatBubbleOutlineRoundedIcon from '@mui/icons-material/ChatBubbleOutlineRounded';
 import ReplyOutlinedIcon from '@mui/icons-material/ReplyOutlined';
@@ -10,12 +10,15 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import { hoursAgo } from '@/assets/hours-ago';
+import ActivityIndicator from '@/utils/activity-indicator';
 import { db } from '@/settings/firebase.setting';
-import { deleteDoc, doc } from 'firebase/firestore';
+import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import CustomDialog from './CustomDialog';
 
 export default function PostDisplay({postID,timePosted,body,postImage}) {
     const {data:session} = useSession();
+    const [updatePost, setUpdatePost] = React.useState(body); // for updating posts
+    const [showActivityIndicator, setShowActivityIndicator] = React.useState(false)
 
      //MENU CONTROL >>>> START
      const [anchorEl, setAnchorEl] = React.useState(null);
@@ -30,15 +33,54 @@ export default function PostDisplay({postID,timePosted,body,postImage}) {
      const handleCloseDialog = () => setOpenDialog(false);
      //DIALOG CONTROL >>>> END
  
+     //UPDATE DIALOG CONTROL >>>> START
+     const [openUpdateDialog, setOpenUpdateDialog] = React.useState(false);
+     const handleClickOpenUpdateDialog = () => setOpenUpdateDialog(true);
+     const handleCloseUpdateDialog = () => setOpenUpdateDialog(false);
+     //UPDATE DIALOG CONTROL >>>> END
+
      //FUNCTION FOR DELETE POST
      const handleDeletePost = async () => {
-         await deleteDoc(doc(db,'posts',postID))
-         .then(() => alert('post deleted'))
-         .catch(e => console.error(e))
+        //show activity indicator
+        setShowActivityIndicator(true)
+        setOpenDialog(true);
+        handleClose();
+        await deleteDoc(doc(db,'posts',postID))
+        .then(() => {
+            setShowActivityIndicator(false);
+            alert('post deleted');
+        })
+        .catch(e => {
+            setShowActivityIndicator(false)
+            console.error(e)
+        })
      }
+
+     // FUNCTION TO UPDATE POST 
+    const handleUpdatePost = async () => {
+        setShowActivityIndicator(true);
+        setOpenUpdateDialog(false);
+        handleClose();
+        await updateDoc(doc(db, 'posts',postID),{
+            body: updatePost,
+            updatedAt:new Date().getTime(),
+        },
+        {
+            merge:true,
+        })
+        .then(() => {
+            setShowActivityIndicator(false);
+            alert('Post Updated');
+        })
+        .catch(e => {
+            setShowActivityIndicator(false)
+            console.error(e)
+        })
+    }
 
     return (
         <>
+        {showActivityIndicator ? <ActivityIndicator/> : null}
         <div className="border border-gray-100 bg-white rounded-md shadow-md py-4 mb-4">
             <ul className="flex justify-between px-4">
                 <li className="flex flex-row gap-1 items-center">
@@ -113,7 +155,7 @@ export default function PostDisplay({postID,timePosted,body,postImage}) {
               horizontal: 'left',
             }}
         >
-            <MenuItem>Update</MenuItem>
+            <MenuItem onClick={handleClickOpenUpdateDialog}>Update</MenuItem>
             <MenuItem onClick={handleClickOpenDialog}>Delete</MenuItem>
         </Menu>
         
@@ -128,6 +170,24 @@ export default function PostDisplay({postID,timePosted,body,postImage}) {
                 onClick={handleDeletePost}>
                     Yes, delete
                 </Button>
+        </CustomDialog>
+        {/* UPDATE POST CUSTOM DIALOG  */}
+        <CustomDialog 
+        openProp={openUpdateDialog} 
+        handleCloseProp={handleCloseUpdateDialog} 
+        title='Edit post'>
+            <TextField 
+            multiline={true}
+            className='w-full'
+            value={updatePost}
+            onChange={(text) => setUpdatePost(text.target.value)}/>
+            <Button 
+            variant='outlined' 
+            color='primary' 
+            onClick={handleUpdatePost}
+            style={{marginTop:8}}>
+                Update
+            </Button>
         </CustomDialog>
         </>
     )
