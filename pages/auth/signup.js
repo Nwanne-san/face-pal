@@ -48,8 +48,8 @@ export default function Signup() {
 
   return (
     <>
-        <main className='h-screen flex justify-center items-center'>
-            <div className="w-[480px] sm:min-h-[480px] flex flex-col gap-5">
+        <main className='h-screen px-1 md:px-0 flex justify-center items-center'>
+            <div className="  w-[480px] sm:min-h-[480px] flex flex-col gap-5">
                 <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
                     <input 
                     id='email'
@@ -87,7 +87,7 @@ export default function Signup() {
                     >Create account</button>
                 </form>
         
-                <div className="w-full grid grid-cols-3 gap-1">
+                <div className="w-full grid grid-cols-3 gap-2">
                     <button 
                     className="w-full h-12 bg-green-600 rounded-lg text-white font-bold"
                     onClick={() => signIn('google')}>Google</button>

@@ -20,8 +20,8 @@ export default function Signin() {
 
   return (
     <>
-        <main className='h-screen flex justify-center items-center'>
-            <div className="px-4  w-[480px] sm:min-h-[480px] flex flex-col gap-5">
+        <main className='h-screen px-1 md:px-0 flex justify-center items-center'>
+            <div className="w-[480px] sm:min-h-[480px] flex flex-col gap-5">
                 <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
                     <input 
                     id='email'
@@ -48,7 +48,7 @@ export default function Signin() {
                     >Log in to facepal</button>
                 </form>
         
-                <div className="w-full grid grid-cols-2 gap-3">
+                <div className="w-full grid grid-cols-2 gap-5">
                     <button className="w-full h-12 bg-green-600 rounded-lg text-white font-bold">Google</button>
                     <button className="w-full h-12 bg-sky-600 rounded-lg text-white font-bold">Twitter</button>
                 </div>

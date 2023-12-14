@@ -51,8 +51,8 @@ export default function Home() {
                 </div>
         
                 <p className="text-2xl text-white">
-                  Want to become a facepal partner?
-                  <Link href="/partner-signup" className="underline">become a partner</Link>
+                  Want to become a facepal partner? 
+                  <Link href="/partner-signup" className="underline hover:text-indigo-300">become a partner</Link>
                 </p>
             </div>
         </div>
