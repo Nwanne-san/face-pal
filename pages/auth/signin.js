@@ -21,7 +21,7 @@ export default function Signin() {
   return (
     <>
         <main className='h-screen flex justify-center items-center'>
-            <div className="w-[480px] sm:min-h-[480px] flex flex-col gap-5">
+            <div className="px-4  w-[480px] sm:min-h-[480px] flex flex-col gap-5">
                 <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
                     <input 
                     id='email'
